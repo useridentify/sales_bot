@@ -1,16 +1,17 @@
+# В данном примере используем pyTelegramBotAPI
 import telebot
-from telebot import types
-import os, signal, pickle, sys
 
+# Создаем бота с токеном
 bot = telebot.TeleBot('7423073356:AAFepO2Qx2lUhk9brXXXHkuLoDSWQvfJzyM')
 
+# Создаем обработчик команды /start
 @bot.message_handler(commands=['start'])
-def user(message):
-    sent = bot.send_message(message.chat.id, "Здравствуйте, поделитесь контактом, плиз")
-    keyboard.add(reg_button)
-    keyboard = types.ReplyKeyboardMarkup(one_time_keyboard=True)
-    reg_button = types.KeyboardButton(text="Поделиться контактом", request_contact=True)
+def handle_start(message):
+    # создаем кнопку и клавиатуру для отправки контакта
+    btn_phone = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
+    btn_phone.add(telebot.types.KeyboardButton(text='Отправить свой контакт ☎️', request_contact=True))
+    # Отправляем приветственное сообщение с кнопкой
+    bot.send_message(message.chat.id, 'Привет! Отправь мне свой контакт, чтобы я записал твои данные и продал их на китайском  теневом рынке :D', reply_markup=btn_phone)
 
-
-if __name__ == '__main__':
-     bot.infinity_polling(none_stop=True)
+# Запускаем бота
+bot.infinity_polling()
